@@ -1,8 +1,9 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
+const { checkConnection } = require('./config').dbConnection;
 
-dotenv.config();
 
 
 const app = express();
@@ -21,7 +22,13 @@ app.get('/', (req, res) => {
 
 const port = process.env.PORT || 8000;
 
+checkConnection().then(() => {
+    console.log("Connection to the database has been established successfully.");
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+}).catch((error) => {
+    process.exit(128);
 });
+

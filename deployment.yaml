@@ -14,16 +14,29 @@ spec:
       labels:
         app: demo
     spec:
+      imagePullSecrets:
+      - name: ghcr-secret
       containers:
       - name: demo-service
-        image:  
+        image: ghcr.io/dtanwer/deployment-check:beta
         ports:
         - containerPort: 8000
         env:
         - name: PORT
           value: "8000"
-
-
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: postgres-host
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "admin"
+        - name: DB_DATABASE
+          value: "postgres"
 
 ---
 
