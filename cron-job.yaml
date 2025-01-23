@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-job
+  labels:
+    app: cron-job
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+            - name: ghcr-secret
+          containers:
+          - name: cron-job-service
+            imagePullPolicy: Always
+            image: ghcr.io/dtanwer/deployment-check:gama
+            command:
+            - /bin/sh
+            - -c
+            - npm run run-script
+          restartPolicy: OnFailure

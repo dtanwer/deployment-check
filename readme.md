@@ -32,3 +32,10 @@ kubectl describe pod podname -> to get the details of a pod
 
 
 minikube service servicename -> to open the service in the browser
+
+
+
+
+docker tag demo-image ghcr.io/dtanwer/deployment-check:beta-> to tag an image
+
+docker push ghcr.io/dtanwer/deployment-check:beta -> to push an image to github container registry
